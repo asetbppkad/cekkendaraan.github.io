@@ -615,3 +615,48 @@ h3 {
         opacity: 0;
     }
 }
+
+#tabelHasil {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+
+.caption {
+    text-align: center;
+    caption-side: top;
+    font-size: 2.5em;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    background: -webkit-linear-gradient(right,
+            #56d8e4,
+            #9f01ea,
+            #56d8e4,
+            #9f01ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#tabelHasil th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+#tabelHasil td {
+    border: 1px solid #ddd;
+}
+
+#tabelHasil tr:nth-child(even) {
+    background-color: #f2f2f2;
+    color: #292929;
+}
+
+#tabelHasil th {
+    background: linear-gradient(115deg, #9f01ea 10%, #56d8e4 90%);
+    color: white;
+}
+
+#tabelHasil th .lebar20 {
+    width: 20%;
+}
