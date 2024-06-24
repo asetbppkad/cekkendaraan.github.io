@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Pecah Kuantitas</title>
+  </head>
+  <body class="pattern1">
+    <script>
+      async function pecahQnt() {
+        const urlSprdSheet = document.getElementById("urlSprdSheet").value;
+        const worksheetName = document.getElementById("worksheetName").value;
+        const barisHeader = document.getElementById("barisHeader").value;
+        const nilaiPerolehan = document.getElementById("nilaiPerolehan").value;
+        const nilaiAset = document.getElementById("nilaiAset").value;
+        const nilaiSusut = document.getElementById("nilaiSusut").value;
+        const quantity = document.getElementById("quantity").value;
+
+        const url = `https://script.google.com/macros/s/AKfycbyO7-J5RtbMCo6t0cdFYq1CfvCyhB68oNETfFIU-8eFIm2ep1EVOpA5Kpzqpxcv8cC3pw/exec?url=${urlSprdSheet}&sheetName=${worksheetName}&jmlHeader=${barisHeader}&colPerolehan=${nilaiPerolehan}&colAset=${nilaiAset}&colDasarSusut=${nilaiSusut}&colQnt=${quantity}`; // Ganti dengan URL web app Anda
+
+        const btnSubmit = document.getElementById("pecahQnt");
+        const btnLoad = document.getElementById("loading");
+        btnSubmit.classList.toggle("d-none");
+        btnLoad.classList.toggle("d-none");
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.pesan == "Pemecahan Selesai") {
+            const dataHasil = `<div class="form">Pemecahan Selesai dan Berhasil</div>`;
+            document.getElementById("tempatHasil").innerHTML = dataHasil;
+          } else {
+            document.getElementById("tempatHasil").innerHTML =
+              '<div class="bgText"><h6 class="pesanError">' +
+              data.pesan +
+              "</h6></div>";
+          }
+          btnSubmit.classList.toggle("d-none");
+          btnLoad.classList.toggle("d-none");
+        } catch (error) {
+          document.getElementById("tempatHasil").innerHTML =
+            '<div class="bgText"><h6 class="pesanError">Error fetching data.' +
+            data.pesan +
+            "</h6></div>";
+          console.error("Error:", error);
+          btnSubmit.classList.toggle("d-none");
+          btnLoad.classList.toggle("d-none");
+        }
+        document.getElementById("urlSprdSheet").value = "";
+        document.getElementById("worksheetName").value = "";
+        document.getElementById("barisHeader").value = "";
+        document.getElementById("nilaiPerolehan").value = "";
+        document.getElementById("nilaiAset").value = "";
+        document.getElementById("nilaiSusut").value = "";
+        document.getElementById("quantity").value = "";
+      }
+    </script>
+
+    <div class="container">
+      <form id="myFormBPKB" onsubmit="pecahQnt(); return false;" class="form">
+        <p class="title">Pecah Kuantitas</p>
+        <p class="message">
+          Pastikan dulu sebelum memecah, untuk menduplikat WorkSheet sebagai
+          back-up. <strong>Kesalahan tidak dapat dikembalikan</strong>
+        </p>
+        <label>
+          <input
+            class="input"
+            type="text"
+            id="urlSprdSheet"
+            placeholder=""
+            required
+          />
+          <span>Link URL Spreadsheet</span>
+        </label>
+
+        <div class="flex">
+          <label class="col-sm-5">
+            <input
+              class="input"
+              type="text"
+              id="worksheetName"
+              placeholder=""
+              required
+            />
+            <span>Nama Worksheet</span>
+          </label>
+          <div class="col-sm-1"></div>
+          <label class="col-sm-5">
+            <input
+              class="input"
+              id="barisHeader"
+              type="number"
+              placeholder=""
+              required
+            />
+            <span>Total Baris Header</span>
+          </label>
+        </div>
+
+        <div class="flex">
+          <label class="col-sm-5">
+            <input
+              class="input"
+              type="text"
+              id="nilaiPerolehan"
+              placeholder=""
+              maxlength="2"
+              required
+            />
+            <span>Kolom Nilai Perolehan</span>
+          </label>
+          <div class="col-sm-1"></div>
+          <label class="col-sm-5">
+            <input
+              class="input"
+              type="text"
+              id="nilaiAset"
+              placeholder=""
+              maxlength="2"
+              required
+            />
+            <span>Kolom Nilai Aset</span>
+          </label>
+        </div>
+        <div class="flex">
+          <label class="col-sm-5">
+            <input
+              class="input"
+              type="text"
+              id="nilaiSusut"
+              placeholder=""
+              maxlength="2"
+              required
+            />
+            <span>Kolom Dasar Penyusutan</span>
+          </label>
+          <div class="col-sm-1"></div>
+          <label class="col-sm-5">
+            <input
+              class="input"
+              type="text"
+              id="quantity"
+              placeholder=""
+              maxlength="2"
+              required
+            />
+            <span>Kolom Kuantitas</span>
+          </label>
+        </div>
+        <div class="row" style="display: flex; justify-content: center">
+          <button class="Btn" id="pecahQnt">Pecahkan saja</button>
+          <button class="Btn_loading d-none" id="loading" disabled>
+            Loading
+          </button>
+        </div>
+      </form>
+      <div id="tempatHasil"></div>
+    </div>
+  </body>
+</html>
