@@ -7,57 +7,6 @@
     <title>Pecah Kuantitas</title>
   </head>
   <body class="pattern1">
-    <script>
-      async function pecahQnt() {
-        const urlSprdSheet = document.getElementById("urlSprdSheet").value;
-        const worksheetName = document.getElementById("worksheetName").value;
-        const barisHeader = document.getElementById("barisHeader").value;
-        const nilaiPerolehan = document.getElementById("nilaiPerolehan").value;
-        const nilaiAset = document.getElementById("nilaiAset").value;
-        const nilaiSusut = document.getElementById("nilaiSusut").value;
-        const quantity = document.getElementById("quantity").value;
-
-        const url = `https://script.google.com/macros/s/AKfycbyO7-J5RtbMCo6t0cdFYq1CfvCyhB68oNETfFIU-8eFIm2ep1EVOpA5Kpzqpxcv8cC3pw/exec?url=${urlSprdSheet}&sheetName=${worksheetName}&jmlHeader=${barisHeader}&colPerolehan=${nilaiPerolehan}&colAset=${nilaiAset}&colDasarSusut=${nilaiSusut}&colQnt=${quantity}`; // Ganti dengan URL web app Anda
-
-        const btnSubmit = document.getElementById("pecahQnt");
-        const btnLoad = document.getElementById("loading");
-        btnSubmit.classList.toggle("d-none");
-        btnLoad.classList.toggle("d-none");
-
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-
-          if (data.pesan == "Pemecahan Selesai") {
-            const dataHasil = `<div class="form">Pemecahan Selesai dan Berhasil</div>`;
-            document.getElementById("tempatHasil").innerHTML = dataHasil;
-          } else {
-            document.getElementById("tempatHasil").innerHTML =
-              '<div class="bgText"><h6 class="pesanError">' +
-              data.pesan +
-              "</h6></div>";
-          }
-          btnSubmit.classList.toggle("d-none");
-          btnLoad.classList.toggle("d-none");
-        } catch (error) {
-          document.getElementById("tempatHasil").innerHTML =
-            '<div class="bgText"><h6 class="pesanError">Error fetching data.' +
-            data.pesan +
-            "</h6></div>";
-          console.error("Error:", error);
-          btnSubmit.classList.toggle("d-none");
-          btnLoad.classList.toggle("d-none");
-        }
-        document.getElementById("urlSprdSheet").value = "";
-        document.getElementById("worksheetName").value = "";
-        document.getElementById("barisHeader").value = "";
-        document.getElementById("nilaiPerolehan").value = "";
-        document.getElementById("nilaiAset").value = "";
-        document.getElementById("nilaiSusut").value = "";
-        document.getElementById("quantity").value = "";
-      }
-    </script>
-
     <div class="container">
       <form id="myFormBPKB" onsubmit="pecahQnt(); return false;" class="form">
         <p class="title">Pecah Kuantitas</p>
@@ -159,5 +108,55 @@
       </form>
       <div id="tempatHasil"></div>
     </div>
+    <script>
+      async function pecahQnt() {
+        const urlSprdSheet = document.getElementById("urlSprdSheet").value;
+        const worksheetName = document.getElementById("worksheetName").value;
+        const barisHeader = document.getElementById("barisHeader").value;
+        const nilaiPerolehan = document.getElementById("nilaiPerolehan").value;
+        const nilaiAset = document.getElementById("nilaiAset").value;
+        const nilaiSusut = document.getElementById("nilaiSusut").value;
+        const quantity = document.getElementById("quantity").value;
+
+        const url = `https://script.google.com/macros/s/AKfycbyO7-J5RtbMCo6t0cdFYq1CfvCyhB68oNETfFIU-8eFIm2ep1EVOpA5Kpzqpxcv8cC3pw/exec?url=${urlSprdSheet}&sheetName=${worksheetName}&jmlHeader=${barisHeader}&colPerolehan=${nilaiPerolehan}&colAset=${nilaiAset}&colDasarSusut=${nilaiSusut}&colQnt=${quantity}`; // Ganti dengan URL web app Anda
+
+        const btnSubmit = document.getElementById("pecahQnt");
+        const btnLoad = document.getElementById("loading");
+        btnSubmit.classList.toggle("d-none");
+        btnLoad.classList.toggle("d-none");
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+
+          if (data.pesan == "Pemecahan Selesai") {
+            const dataHasil = `<div class="form">Pemecahan Selesai dan Berhasil</div>`;
+            document.getElementById("tempatHasil").innerHTML = dataHasil;
+          } else {
+            document.getElementById("tempatHasil").innerHTML =
+              '<div class="bgText"><h6 class="pesanError">' +
+              data.pesan +
+              "</h6></div>";
+          }
+          btnSubmit.classList.toggle("d-none");
+          btnLoad.classList.toggle("d-none");
+        } catch (error) {
+          document.getElementById("tempatHasil").innerHTML =
+            '<div class="bgText"><h6 class="pesanError">Error fetching data.' +
+            data.pesan +
+            "</h6></div>";
+          console.error("Error:", error);
+          btnSubmit.classList.toggle("d-none");
+          btnLoad.classList.toggle("d-none");
+        }
+        document.getElementById("urlSprdSheet").value = "";
+        document.getElementById("worksheetName").value = "";
+        document.getElementById("barisHeader").value = "";
+        document.getElementById("nilaiPerolehan").value = "";
+        document.getElementById("nilaiAset").value = "";
+        document.getElementById("nilaiSusut").value = "";
+        document.getElementById("quantity").value = "";
+      }
+    </script>
   </body>
 </html>
