@@ -34,6 +34,7 @@
                 id="kataKunci"
                 placeholder=""
                 required
+                autocomplete="off"
               />
               <span id="ubah">Masukkan Nopol</span>
             </label>
@@ -70,12 +71,15 @@
     </div>
     <script>
       async function searchBPKB() {
-        const berdasar = document.getElementById("berdasar").value;
-        const kataKunci = document.getElementById("kataKunci").value;
-        const url = `https://script.google.com/macros/s/AKfycbxsVHAieliT4yi36gSKgd2kjQLJzSJdF3JSp2wjCNN0eAoqFTyNGxozqwBxqARi5Xea/exec?berdasar=${berdasar}&kataKunci=${kataKunci}`; // Ganti dengan URL web app Anda
-
         const btnSubmit = document.getElementById("cariBPKB");
         const btnLoad = document.getElementById("loading");
+        const tempatHasil = document.getElementById("tempatHasil");
+        const berdasar = document.getElementById("berdasar").value;
+        const kataKunci_input = document.getElementById("kataKunci").value;
+        const kataKunci = upperCase(kataKunci_input);
+        tempatHasil.innerHTML = "";
+        const url = `https://script.google.com/macros/s/AKfycbxsVHAieliT4yi36gSKgd2kjQLJzSJdF3JSp2wjCNN0eAoqFTyNGxozqwBxqARi5Xea/exec?berdasar=${berdasar}&kataKunci=${kataKunci}`; // Ganti dengan URL web app Anda
+
         btnSubmit.classList.toggle("d-none");
         btnLoad.classList.toggle("d-none");
 
@@ -85,8 +89,8 @@
 
           if (data.nopol) {
             const dataHasil = `<table id="tabelHasil"  class="form">
-                                                      <caption class="caption">
-                                                          <h5>Hasil Pencarian</h5>
+                                                      <caption>
+                                                          <h5 class="caption">Hasil Pencarian</h5>
                                                       </caption>
                                                       <tr>
                                                           <th class="lebar20">SKPD</th>
@@ -122,7 +126,7 @@
                                                           <td>${data.jabatan}</td>
                                                       </tr>
                                                   </table>`;
-            document.getElementById("tempatHasil").innerHTML = dataHasil;
+            tempatHasil.innerHTML = dataHasil;
           } else {
             document.getElementById("tempatHasil").innerHTML =
               '<div  class="form"><div class="caption"><h6>Data tidak ditemukan.</h6></div></div>';
@@ -137,6 +141,28 @@
           btnLoad.classList.toggle("d-none");
         }
         document.getElementById("kataKunci").value = "";
+      }
+
+      function upperCase(teks) {
+        var berdasar = document.getElementById("berdasar").value;
+
+        if (berdasar == "Nopol") {
+          // Pisahkan plat nomor menjadi bagian-bagian
+          let platNomor = teks.trim().replace(/\s+/g, "");
+          // Gunakan ekspresi reguler untuk memisahkan bagian-bagian plat nomor
+          let match = platNomor.match(/^([a-zA-Z]+)(\d+)([a-zA-Z]+)$/);
+          if (match) {
+            // Ambil bagian-bagian yang ditemukan
+            let bagian1 = match[1].toUpperCase();
+            let bagian2 = match[2];
+            let bagian3 = match[3].toUpperCase();
+            // Gabungkan kembali bagian-bagian tersebut dengan format yang diinginkan
+            let platNomorBaru = `${bagian1} ${bagian2} ${bagian3}`;
+            return platNomorBaru;
+          }
+        } else {
+          return teks;
+        }
       }
     </script>
   </body>
